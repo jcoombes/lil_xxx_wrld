@@ -22,8 +22,19 @@ func _ready():
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-#func _process(delta):
-#	pass
+func _process(_delta: float) -> void:
+	print(velocity)
+	if velocity.length() > 0.0:
+		if velocity.y > 0.0:
+			($AnimatedSprite as AnimatedSprite).play("move_down")
+		elif velocity.y < 0.0:
+			($AnimatedSprite as AnimatedSprite).play("move_up")
+		elif velocity.x > 0.0:
+			($AnimatedSprite as AnimatedSprite).play("move_right")
+		elif velocity.x < 0.0:
+			($AnimatedSprite as AnimatedSprite).play("move_left")
+	else:
+		($AnimatedSprite as AnimatedSprite).play("idle")
 
 func _physics_process(delta: float) -> void:
 	var new_direction := Vector2()
@@ -81,8 +92,7 @@ func _physics_process(delta: float) -> void:
 			acceleration = (0.0 - SUSTAIN_SPEED) / RELEASE_DURATION
 	
 	velocity = clamp(speed + delta * acceleration, min_speed, max_speed) * direction
-	print(acceleration)
-	print(velocity)
+	
 	var _collision = move_and_collide(velocity * delta)
 
 func _integrate_forces(_state: Physics2DDirectBodyState) -> void:
