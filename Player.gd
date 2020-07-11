@@ -13,8 +13,10 @@ const PEAK_SPEED: float = 200.0
 const SUSTAIN_SPEED: float = 180.0
 
 var velocity := Vector2()
-var direction := Vector2()
+var movement_direction := Vector2()
+var facing_direction := Vector2()
 var _phase: int = Envelope.RELEASE
+var combo: int = 0
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -37,7 +39,18 @@ func _process(_delta: float) -> void:
 	
 	# borrowing "accept" for "attack"
 	if Input.is_action_just_pressed("ui_accept"):
-		($AnimationPlayer as AnimationPlayer).play("attack_down")
+		match combo:
+			0:
+				# swing to the right
+				($Sword as Area2D).transform = Transform2D.IDENTITY.rotated(facing_direction.angle())
+				($AnimationPlayer as AnimationPlayer).play("attack_down")
+				combo = 1
+			1:
+				# swing to the left
+				($Sword as Area2D).transform = Transform2D.IDENTITY.scaled(Vector2(-1, 1)).rotated(facing_direction.angle() + PI)
+				($AnimationPlayer as AnimationPlayer).play("attack_down")
+				combo = 0
+		($ComboResetTimer as Timer).start()
 
 func _physics_process(delta: float) -> void:
 	var new_direction := Vector2()
@@ -56,7 +69,8 @@ func _physics_process(delta: float) -> void:
 	var speed: float = velocity.length()
 	
 	if new_direction.length() > 0.0:
-		direction = new_direction
+		movement_direction = new_direction
+		facing_direction = new_direction
 		match _phase:
 			Envelope.RELEASE:
 				if speed == 0.0:
@@ -94,7 +108,7 @@ func _physics_process(delta: float) -> void:
 		Envelope.RELEASE:
 			acceleration = (0.0 - SUSTAIN_SPEED) / RELEASE_DURATION
 	
-	velocity = clamp(speed + delta * acceleration, min_speed, max_speed) * direction
+	velocity = clamp(speed + delta * acceleration, min_speed, max_speed) * movement_direction
 	
 	var _collision = move_and_collide(velocity * delta)
 	
@@ -106,3 +120,7 @@ func _integrate_forces(_state: Physics2DDirectBodyState) -> void:
 
 func _on_Sword_area_entered(area: Area2D) -> void:
 	area.take_damage()
+
+
+func _on_ComboResetTimer_timeout():
+	combo = 0
