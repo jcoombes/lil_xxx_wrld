@@ -16,6 +16,7 @@ _global_script_class_icons={
 [application]
 
 config/name="Lil Xxx Wrld"
+run/main_scene="res://Main_menu.tscn"
 config/icon="res://icon.png"
 
 [autoload]
@@ -28,9 +29,11 @@ gdscript/warnings/treat_warnings_as_errors=true
 
 [layer_names]
 
-2d_physics/layer_1="Player"
-2d_physics/layer_2="Enemy"
-2d_physics/layer_3="Environment"
+2d_physics/layer_1="Physics"
+2d_physics/layer_2="Player Attack"
+2d_physics/layer_3="Player Hitbox"
+2d_physics/layer_4="Enemy Attack"
+2d_physics/layer_5="Enemy Hitbox"
 
 [physics]
 

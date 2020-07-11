@@ -20,5 +20,4 @@ func _process(_delta: float) -> void:
 
 
 func _on_Hitbox_area_entered(area: Area2D) -> void:
-	if area.is_in_group("AttackBoxes"):
-		health -= area.damage
+	health -= area.damage
