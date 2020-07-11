@@ -43,14 +43,28 @@ func _process(_delta: float) -> void:
 			0:
 				# swing to the right
 				($Sword as Area2D).transform = Transform2D.IDENTITY.rotated(facing_direction.angle())
-				($AnimationPlayer as AnimationPlayer).play("attack_down")
+				play_attack_animation(facing_direction)
 				combo = 1
 			1:
 				# swing to the left
 				($Sword as Area2D).transform = Transform2D.IDENTITY.scaled(Vector2(-1, 1)).rotated(facing_direction.angle() + PI)
-				($AnimationPlayer as AnimationPlayer).play("attack_down")
+				play_attack_animation(facing_direction)
 				combo = 0
 		($ComboResetTimer as Timer).start()
+	
+
+func play_attack_animation(direction: Vector2) -> void:
+	if direction.y > 0.0:
+		($AnimationPlayer as AnimationPlayer).play("attack_down")
+	elif velocity.y < 0.0:
+		($AnimationPlayer as AnimationPlayer).play("attack_up")
+	elif velocity.x > 0.0:
+		($AnimationPlayer as AnimationPlayer).play("attack_right")
+	elif velocity.x < 0.0:
+		($AnimationPlayer as AnimationPlayer).play("attack_left")
+	else:
+		($AnimationPlayer as AnimationPlayer).play("attack_down")
+
 
 func _physics_process(delta: float) -> void:
 	var new_direction := Vector2()
