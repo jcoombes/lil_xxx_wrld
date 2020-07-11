@@ -97,6 +97,12 @@ func _physics_process(delta: float) -> void:
 	velocity = clamp(speed + delta * acceleration, min_speed, max_speed) * direction
 	
 	var _collision = move_and_collide(velocity * delta)
+	
+	z_index = int(position.y)
 
 func _integrate_forces(_state: Physics2DDirectBodyState) -> void:
 	pass
+
+
+func _on_Sword_area_entered(area: Area2D) -> void:
+	area.take_damage()
