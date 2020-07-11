@@ -19,10 +19,6 @@ config/name="Lil Xxx Wrld"
 run/main_scene="res://Main_menu.tscn"
 config/icon="res://icon.png"
 
-[autoload]
-
-CombatSystem="*res://CombatSystem.gd"
-
 [debug]
 
 gdscript/warnings/treat_warnings_as_errors=true
