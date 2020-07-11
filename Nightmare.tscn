@@ -6,7 +6,9 @@
 [node name="Nightmare" type="Node2D"]
 
 [node name="Player" parent="." instance=ExtResource( 1 )]
-position = Vector2( 49.1682, 41.5668 )
+position = Vector2( 492.667, 168.923 )
 
 [node name="Demon" parent="." instance=ExtResource( 2 )]
-position = Vector2( 49.3207, 155.917 )
+
+position = Vector2( 495.816, 290.411 )
+

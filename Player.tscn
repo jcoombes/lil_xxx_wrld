@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=2]
+[gd_scene load_steps=15 format=2]
 
 [ext_resource path="res://assets/player/right.png" type="Texture" id=1]
 [ext_resource path="res://assets/player/left.png" type="Texture" id=2]
@@ -7,6 +7,7 @@
 [ext_resource path="res://assets/player/idle.png" type="Texture" id=5]
 [ext_resource path="res://assets/player/up.png" type="Texture" id=6]
 [ext_resource path="res://assets/player/attack.png" type="Texture" id=7]
+[ext_resource path="res://Sword.gd" type="Script" id=8]
 
 [sub_resource type="SpriteFrames" id=1]
 animations = [ {
@@ -25,18 +26,18 @@ animations = [ {
 "name": "move_down",
 "speed": 5.0
 }, {
-"frames": [ ExtResource( 1 ) ],
-"loop": true,
-"name": "move_right",
-"speed": 5.0
-}, {
 "frames": [ ExtResource( 2 ) ],
 "loop": true,
 "name": "move_left",
 "speed": 5.0
+}, {
+"frames": [ ExtResource( 1 ) ],
+"loop": true,
+"name": "move_right",
+"speed": 5.0
 } ]
 
-[sub_resource type="Animation" id=2]
+[sub_resource type="Animation" id=3]
 resource_name = "attack_down"
 length = 0.3
 tracks/0/type = "value"
@@ -88,7 +89,10 @@ tracks/3/keys = {
 "values": [ false, true ]
 }
 
-[sub_resource type="RectangleShape2D" id=3]
+[sub_resource type="RectangleShape2D" id=6]
+extents = Vector2( 73.8553, 2.39942 )
+
+[sub_resource type="RectangleShape2D" id=2]
 extents = Vector2( 12.5, 32 )
 
 [sub_resource type="SpriteFrames" id=4]
@@ -113,12 +117,25 @@ animation = "idle"
 offset = Vector2( 111.25, -318.057 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-anims/attack_down = SubResource( 2 )
+anims/attack_down = SubResource( 3 )
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-shape = SubResource( 3 )
+[node name="Movebox" type="CollisionShape2D" parent="."]
+position = Vector2( 0, 18.24 )
+scale = Vector2( -0.170367, -5.65451 )
+shape = SubResource( 6 )
+
+[node name="Hitbox" type="Area2D" parent="."]
+collision_layer = 4
+collision_mask = 8
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox"]
+shape = SubResource( 2 )
 
 [node name="Sword" type="Area2D" parent="."]
+position = Vector2( -0.561234, 8.69908 )
+collision_layer = 2
+collision_mask = 16
+script = ExtResource( 8 )
 
 [node name="SwordSprite" type="AnimatedSprite" parent="Sword"]
 visible = false
@@ -130,3 +147,4 @@ position = Vector2( 0.75, 10 )
 rotation = 1.57079
 shape = SubResource( 5 )
 disabled = true
+:
