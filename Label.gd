@@ -10,8 +10,27 @@ extends Label
 func _ready():
 	pass # Replace with function body.
 
+func list_files_in_directory(path):
+	var files = []
+	var dir = Directory.new()
+	if dir.open(path) == OK:
+		dir.list_dir_begin()
+		
+		while true:
+			var file = dir.get_next()
+			if file == "":
+				break
+			elif not file.begins_with("."):
+				files.append(file)
+		
+		dir.list_dir_end()
+	
+	return files
+
 func fetch_lyrics(drunkness: int):
-	print(drunkness)
+	files = list_files_in_directory("res://assets/juice_corpus")
+	var choice = files[randi() % files.size()]
+	
 	var file = File.new()
 	file.open("res://assets/juice_corpus/wasted.txt", file.READ)
 	var content = file.get_as_text()
