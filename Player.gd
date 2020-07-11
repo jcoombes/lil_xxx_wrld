@@ -111,8 +111,6 @@ func _physics_process(delta: float) -> void:
 	velocity = clamp(speed + delta * acceleration, min_speed, max_speed) * movement_direction
 	
 	var _collision = move_and_collide(velocity * delta)
-	
-	z_index = int(position.y)
 
 func _integrate_forces(_state: Physics2DDirectBodyState) -> void:
 	pass
