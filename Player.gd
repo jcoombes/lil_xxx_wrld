@@ -1,6 +1,9 @@
 extends KinematicBody2D
 
+enum Behaviours {ALIVE, DEAD}
 enum Envelope {ATTACK, DECAY, SUSTAIN, RELEASE}
+
+signal dead
 
 # time it takes to hit max speed (seconds)
 const ATTACK_DURATION: float = 0.2
@@ -17,6 +20,10 @@ var movement_direction := Vector2()
 var facing_direction := Vector2()
 var _phase: int = Envelope.RELEASE
 var combo: int = 0
+
+var health: float = 10.0
+var state: int = Behaviours.ALIVE
+
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -67,6 +74,14 @@ func play_attack_animation(direction: Vector2) -> void:
 
 
 func _physics_process(delta: float) -> void:
+	match state:
+		Behaviours.ALIVE:
+			do_movement(delta)
+		Behaviours.DEAD:
+			pass
+
+
+func do_movement(delta: float) -> void:
 	var new_direction := Vector2()
 	
 	if Input.is_action_pressed("ui_right"):
@@ -136,3 +151,12 @@ func _on_Sword_area_entered(area: Area2D) -> void:
 
 func _on_ComboResetTimer_timeout():
 	combo = 0
+
+
+func _on_Hitbox_area_entered(area):
+	health -= area.damage
+	
+	if health <= 0.0:
+		emit_signal("dead")
+		state = Behaviours.DEAD
+		($AnimatedSprite as AnimatedSprite).visible = false
