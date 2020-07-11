@@ -1,6 +1,4 @@
 extends Label
-
-
 # Declare member variables here. Examples:
 # var a = 2
 # var b = "text"
@@ -46,10 +44,18 @@ func fetch_lyrics(drunkness: int):
 var drank: int
 
 func _on_Fall_Asleep_button_up():
+	self.visible_characters = 0
 	drank = 100 - $"../TextureProgress/VSlider".value
 	self.text = fetch_lyrics(drank)
 	
-	
+	while self.visible_characters <= self.text.length():
+		self.visible_characters += 1
+		yield(get_tree().create_timer(0.1), "timeout")
+		$"../CurtainFall".color[3] += 0.01
+		if $"../CurtainFall".color[3] > 1.0:
+			var _k = get_tree().change_scene("res://Nightmare.tscn")
+			break
+	return
 	
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 #func _process(delta):
