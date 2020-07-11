@@ -89,8 +89,8 @@ tracks/3/keys = {
 "values": [ false, true ]
 }
 
-[sub_resource type="RectangleShape2D" id=6]
-extents = Vector2( 73.8553, 2.39942 )
+[sub_resource type="CircleShape2D" id=6]
+radius = 11.9368
 
 [sub_resource type="RectangleShape2D" id=2]
 extents = Vector2( 12.5, 32 )
@@ -120,8 +120,7 @@ offset = Vector2( 111.25, -318.057 )
 anims/attack_down = SubResource( 3 )
 
 [node name="Movebox" type="CollisionShape2D" parent="."]
-position = Vector2( 0, 18.24 )
-scale = Vector2( -0.170367, -5.65451 )
+position = Vector2( 0, 20.2043 )
 shape = SubResource( 6 )
 
 [node name="Hitbox" type="Area2D" parent="."]
