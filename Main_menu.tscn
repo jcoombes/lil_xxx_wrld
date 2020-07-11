@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=14 format=2]
 
 [ext_resource path="res://assets/main_menu/character.png" type="Texture" id=1]
 [ext_resource path="res://assets/main_menu/purple.jpg" type="Texture" id=2]
@@ -6,12 +6,21 @@
 [ext_resource path="res://assets/main_menu/credits.png" type="Texture" id=4]
 [ext_resource path="res://assets/main_menu/newgame.PNG" type="Texture" id=5]
 [ext_resource path="res://assets/main_menu/lil_xxx_wrld.png" type="Texture" id=6]
+[ext_resource path="res://New Game.gd" type="Script" id=7]
+[ext_resource path="res://Main_menu.gd" type="Script" id=8]
 
 [sub_resource type="CanvasItemMaterial" id=1]
 
 [sub_resource type="ImageTexture" id=2]
 
 [sub_resource type="ImageTexture" id=3]
+
+[sub_resource type="InputEventAction" id=4]
+action = "\""
+pressed = true
+
+[sub_resource type="ShortCut" id=5]
+shortcut = SubResource( 4 )
 
 [node name="Control" type="Control"]
 material = SubResource( 1 )
@@ -21,6 +30,8 @@ margin_left = 0.890869
 margin_top = -1.0
 margin_right = 0.890869
 margin_bottom = -1.0
+mouse_filter = 2
+script = ExtResource( 8 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -28,6 +39,7 @@ __meta__ = {
 [node name="MarginContainer" type="MarginContainer" parent="."]
 margin_right = 1020.0
 margin_bottom = 600.0
+mouse_filter = 2
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -44,28 +56,14 @@ texture = ExtResource( 1 )
 [node name="CenterContainer" type="CenterContainer" parent="MarginContainer"]
 margin_right = 1020.0
 margin_bottom = 600.0
+mouse_filter = 2
 
 [node name="VSeparator" type="VSeparator" parent="MarginContainer/CenterContainer"]
 margin_left = 508.0
 margin_top = 298.0
 margin_right = 512.0
 margin_bottom = 301.0
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="New Game" type="Button" parent="MarginContainer/CenterContainer/VSeparator"]
-anchor_left = 78.93
-anchor_top = -22.0
-anchor_right = 78.93
-anchor_bottom = -22.0
-margin_left = -215.72
-margin_top = -34.0
-margin_right = 442.28
-margin_bottom = 104.0
-rect_scale = Vector2( 0.5, 0.5 )
-icon = ExtResource( 5 )
-flat = true
+mouse_filter = 2
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -80,7 +78,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Button" type="Button" parent="MarginContainer/CenterContainer/VSeparator"]
+[node name="Quit" type="Button" parent="MarginContainer/CenterContainer/VSeparator"]
 margin_left = 100.0
 margin_top = 100.0
 margin_right = 358.0
@@ -108,5 +106,25 @@ margin_bottom = 600.0
 texture = SubResource( 3 )
 
 [node name="purple" type="Sprite" parent="MarginContainer/TextureRect2"]
-position = Vector2( 536.436, 294.271 )
+position = Vector2( 525.841, 294.271 )
 texture = ExtResource( 2 )
+
+[node name="New Game" type="Button" parent="."]
+anchor_left = 78.4
+anchor_top = -21.833
+anchor_right = 78.4
+anchor_bottom = -21.833
+margin_left = -79673.6
+margin_top = 13297.8
+margin_right = -79015.6
+margin_bottom = 13435.8
+rect_scale = Vector2( 0.5, 0.5 )
+shortcut = SubResource( 5 )
+icon = ExtResource( 5 )
+flat = true
+script = ExtResource( 7 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+[connection signal="button_up" from="New Game" to="New Game" method="_on_New_Game_button_up"]
+[connection signal="pressed" from="New Game" to="New Game" method="_on_New_Game_pressed"]

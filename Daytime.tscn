@@ -1,7 +1,8 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://assets/main_menu/purple.jpg" type="Texture" id=1]
 [ext_resource path="res://assets/daytime/black.png" type="Texture" id=2]
+[ext_resource path="res://Label.gd" type="Script" id=3]
 [ext_resource path="res://VSlider.gd" type="Script" id=4]
 [ext_resource path="res://TextureProgress.gd" type="Script" id=5]
 
@@ -19,43 +20,31 @@ __meta__ = {
 }
 
 [node name="TextureRect" type="TextureRect" parent="."]
-margin_left = 0.532013
-margin_top = -18.4263
-margin_right = 1280.53
-margin_bottom = 702.574
+margin_left = -2.46457
+margin_top = -22.9212
+margin_right = 1277.53
+margin_bottom = 698.079
 texture = ExtResource( 2 )
 expand = true
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="CenterContainer" type="CenterContainer" parent="."]
-margin_left = 500.0
-margin_top = 100.0
-margin_right = 100.0
-margin_bottom = 100.0
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="HBoxContainer" type="HBoxContainer" parent="CenterContainer"]
-margin_right = 182.0
-margin_bottom = 20.0
-rect_scale = Vector2( 2, 2 )
-
-[node name="Button" type="Button" parent="CenterContainer/HBoxContainer"]
-margin_right = 182.0
-margin_bottom = 20.0
-text = "Write Song and Fall Asleep"
+[node name="Fall Asleep" type="Button" parent="."]
+margin_left = 128.42
+margin_top = 440.116
+margin_right = 502.42
+margin_bottom = 566.116
+text = "Write Lyrics and Fall Asleep"
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="TextureProgress" type="TextureProgress" parent="."]
-margin_left = 200.0
-margin_top = 100.0
-margin_right = 1480.0
-margin_bottom = 821.0
+margin_left = 247.946
+margin_top = 17.5931
+margin_right = 1527.95
+margin_bottom = 738.593
 rect_scale = Vector2( 0.1, 0.55 )
 size_flags_horizontal = 3
 size_flags_vertical = 3
@@ -74,9 +63,27 @@ margin_bottom = 718.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 size_flags_stretch_ratio = 6.16
-max_value = 100.0
 script = ExtResource( 4 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="Lyrics" type="Label" parent="."]
+margin_left = 602.0
+margin_top = 66.0
+margin_right = 766.0
+margin_bottom = 227.0
+rect_scale = Vector2( 2, 2 )
+rect_clip_content = true
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+text = "I'm not sure,
+Something something,
+Blacked out blur.
+Insecure."
+autowrap = true
+script = ExtResource( 3 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+[connection signal="button_up" from="Fall Asleep" to="Lyrics" method="_on_Fall_Asleep_button_up"]
 [connection signal="value_changed" from="TextureProgress/VSlider" to="TextureProgress" method="_on_VSlider_value_changed"]
