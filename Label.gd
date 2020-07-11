@@ -28,16 +28,20 @@ func list_files_in_directory(path):
 	return files
 
 func fetch_lyrics(drunkness: int):
-	files = list_files_in_directory("res://assets/juice_corpus")
+	var files = list_files_in_directory("res://assets/juice_corpus")
 	var choice = files[randi() % files.size()]
 	
+	var full_path = "res://assets/juice_corpus/" + choice
+	print(full_path)
+	
 	var file = File.new()
-	file.open("res://assets/juice_corpus/wasted.txt", file.READ)
+	file.open(full_path, file.READ)
 	var content = file.get_as_text()
 	print(content)
 	file.close()
+	
+	print(drunkness)
 	return content
-	# self.text =
 	
 var drank: int
 
