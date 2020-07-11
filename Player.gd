@@ -23,7 +23,6 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta: float) -> void:
-	print(velocity)
 	if velocity.length() > 0.0:
 		if velocity.y > 0.0:
 			($AnimatedSprite as AnimatedSprite).play("move_down")
@@ -35,6 +34,10 @@ func _process(_delta: float) -> void:
 			($AnimatedSprite as AnimatedSprite).play("move_left")
 	else:
 		($AnimatedSprite as AnimatedSprite).play("idle")
+	
+	# borrowing "accept" for "attack"
+	if Input.is_action_just_pressed("ui_accept"):
+		($AnimationPlayer as AnimationPlayer).play("attack_down")
 
 func _physics_process(delta: float) -> void:
 	var new_direction := Vector2()
