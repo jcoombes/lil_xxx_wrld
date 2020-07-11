@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=2]
+[gd_scene load_steps=15 format=2]
 
 [ext_resource path="res://assets/player/right.png" type="Texture" id=1]
 [ext_resource path="res://assets/player/left.png" type="Texture" id=2]
@@ -7,6 +7,7 @@
 [ext_resource path="res://assets/player/idle.png" type="Texture" id=5]
 [ext_resource path="res://assets/player/up.png" type="Texture" id=6]
 [ext_resource path="res://assets/player/attack.png" type="Texture" id=7]
+[ext_resource path="res://Sword.gd" type="Script" id=8]
 
 [sub_resource type="SpriteFrames" id=1]
 animations = [ {
@@ -88,6 +89,9 @@ tracks/3/keys = {
 "values": [ false, true ]
 }
 
+[sub_resource type="RectangleShape2D" id=6]
+extents = Vector2( 73.8553, 2.39942 )
+
 [sub_resource type="RectangleShape2D" id=2]
 extents = Vector2( 12.5, 32 )
 
@@ -104,6 +108,7 @@ radius = 22.307
 height = 24.3859
 
 [node name="Player" type="KinematicBody2D"]
+collision_mask = 7
 script = ExtResource( 3 )
 
 [node name="AnimatedSprite" type="AnimatedSprite" parent="."]
@@ -115,10 +120,25 @@ offset = Vector2( 111.25, -318.057 )
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 anims/attack_down = SubResource( 3 )
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="Movebox" type="CollisionShape2D" parent="."]
+position = Vector2( 0, 18.24 )
+scale = Vector2( -0.170367, -5.65451 )
+shape = SubResource( 6 )
+
+[node name="Hitbox" type="Area2D" parent="." groups=[
+"HitBoxes",
+]]
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox"]
 shape = SubResource( 2 )
 
-[node name="Sword" type="Area2D" parent="."]
+[node name="Sword" type="Area2D" parent="." groups=[
+"AttackBoxes",
+]]
+position = Vector2( -0.561234, 8.69908 )
+collision_mask = 2
+script = ExtResource( 8 )
 
 [node name="SwordSprite" type="AnimatedSprite" parent="Sword"]
 visible = false
