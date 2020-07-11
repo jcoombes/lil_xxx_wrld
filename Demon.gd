@@ -1,11 +1,12 @@
 extends KinematicBody2D
 
-enum Behaviours {WANDER, CHASE, ATTACK, DEAD}
+enum Behaviours {WANDER, CHASE, ATTACK, STUNNED, DEAD}
 
 # Declare member variables here. Examples:
 # var a = 2
 # var b = "text"
 const WANDER_SPEED: float = 100.0
+const KNOCKBACK_SPEED: float = 500.0
 
 var health: float = 10.0
 
@@ -38,9 +39,13 @@ func _physics_process(delta: float) -> void:
 	
 	var _collided: KinematicCollision2D = move_and_collide(velocity * delta)
 
-func _on_Hitbox_area_entered(area: Area2D) -> void:
-	health -= area.damage
 
+func _on_Hitbox_area_entered(area: Area2D) -> void:
+	if area is Weapon:
+		health -= area.damage
+		state = Behaviours.STUNNED
+		($StunTimer as Timer).start()
+		velocity = (position - area.find_parent("Player").position).normalized() * KNOCKBACK_SPEED
 
 func _on_WanderTimer_timeout() -> void:
 	var p: float = randf()
@@ -50,3 +55,7 @@ func _on_WanderTimer_timeout() -> void:
 		wander_direction = Vector2(1, 0).rotated(phi)
 	else:
 		wander_direction = Vector2()
+
+
+func _on_StunTimer_timeout():
+	state = Behaviours.WANDER

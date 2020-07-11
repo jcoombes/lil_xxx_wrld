@@ -7,7 +7,7 @@
 [ext_resource path="res://assets/player/idle.png" type="Texture" id=5]
 [ext_resource path="res://assets/player/up.png" type="Texture" id=6]
 [ext_resource path="res://assets/player/attack.png" type="Texture" id=7]
-[ext_resource path="res://Sword.gd" type="Script" id=8]
+[ext_resource path="res://Weapon.gd" type="Script" id=8]
 
 [sub_resource type="SpriteFrames" id=1]
 animations = [ {
@@ -89,7 +89,7 @@ tracks/3/keys = {
 "values": [ false, true ]
 }
 
-[sub_resource type="Animation" id=3]
+[sub_resource type="Animation" id=9]
 resource_name = "attack_left"
 length = 0.3
 tracks/0/type = "value"
@@ -141,7 +141,7 @@ tracks/3/keys = {
 "values": [ false, true ]
 }
 
-[sub_resource type="Animation" id=4]
+[sub_resource type="Animation" id=10]
 resource_name = "attack_right"
 length = 0.3
 tracks/0/type = "value"
@@ -193,7 +193,7 @@ tracks/3/keys = {
 "values": [ false, true ]
 }
 
-[sub_resource type="Animation" id=5]
+[sub_resource type="Animation" id=11]
 resource_name = "attack_up"
 length = 0.3
 tracks/0/type = "value"
@@ -249,7 +249,7 @@ tracks/3/keys = {
 radius = 11.9368
 
 [sub_resource type="RectangleShape2D" id=7]
-extents = Vector2( 12.5, 32 )
+extents = Vector2( 12.5, 11.9687 )
 
 [sub_resource type="SpriteFrames" id=8]
 animations = [ {
@@ -270,9 +270,9 @@ offset = Vector2( 111.25, -318.057 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 anims/attack_down = SubResource( 2 )
-anims/attack_left = SubResource( 3 )
-anims/attack_right = SubResource( 4 )
-anims/attack_up = SubResource( 5 )
+anims/attack_left = SubResource( 9 )
+anims/attack_right = SubResource( 10 )
+anims/attack_up = SubResource( 11 )
 
 [node name="Movebox" type="CollisionShape2D" parent="."]
 position = Vector2( 0, 20.2043 )
@@ -283,6 +283,7 @@ collision_layer = 4
 collision_mask = 8
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox"]
+position = Vector2( 0, 20.2043 )
 shape = SubResource( 7 )
 
 [node name="Sword" type="Area2D" parent="."]
@@ -304,5 +305,10 @@ polygon = PoolVector2Array( -15.336, 47.0982, -31.3311, 47.6594, -45.6424, 44.57
 
 [node name="ComboResetTimer" type="Timer" parent="."]
 one_shot = true
+
+[node name="RecoilTimer" type="Timer" parent="."]
+wait_time = 0.1
+one_shot = true
 [connection signal="area_entered" from="Hitbox" to="." method="_on_Hitbox_area_entered"]
 [connection signal="timeout" from="ComboResetTimer" to="." method="_on_ComboResetTimer_timeout"]
+[connection signal="timeout" from="RecoilTimer" to="." method="_on_RecoilTimer_timeout"]

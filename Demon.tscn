@@ -13,7 +13,7 @@ animations = [ {
 } ]
 
 [sub_resource type="CircleShape2D" id=2]
-radius = 32.0
+radius = 24.0
 
 [sub_resource type="CircleShape2D" id=3]
 radius = 32.0
@@ -28,25 +28,30 @@ script = ExtResource( 2 )
 [node name="WanderTimer" type="Timer" parent="."]
 autostart = true
 
+[node name="StunTimer" type="Timer" parent="."]
+wait_time = 0.2
+one_shot = true
+
 [node name="AnimatedSprite" type="AnimatedSprite" parent="."]
 frames = SubResource( 1 )
 
 [node name="MoveBox" type="CollisionShape2D" parent="."]
 shape = SubResource( 2 )
 
-[node name="Hitbox" type="Area2D" parent="."]
+[node name="DemonHitbox" type="Area2D" parent="."]
 collision_layer = 2147483664
 collision_mask = 2147483650
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DemonHitbox"]
 shape = SubResource( 3 )
 
-[node name="Hurtbox" type="Area2D" parent="."]
+[node name="DemonHurtbox" type="Area2D" parent="."]
 collision_layer = 8
 collision_mask = 4
 script = ExtResource( 3 )
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Hurtbox"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DemonHurtbox"]
 shape = SubResource( 4 )
 [connection signal="timeout" from="WanderTimer" to="." method="_on_WanderTimer_timeout"]
-[connection signal="area_entered" from="Hitbox" to="." method="_on_Hitbox_area_entered"]
+[connection signal="timeout" from="StunTimer" to="." method="_on_StunTimer_timeout"]
+[connection signal="area_entered" from="DemonHitbox" to="." method="_on_Hitbox_area_entered"]
