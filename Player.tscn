@@ -89,7 +89,7 @@ tracks/3/keys = {
 "values": [ false, true ]
 }
 
-[sub_resource type="Animation" id=6]
+[sub_resource type="Animation" id=3]
 resource_name = "attack_left"
 length = 0.3
 tracks/0/type = "value"
@@ -141,7 +141,7 @@ tracks/3/keys = {
 "values": [ false, true ]
 }
 
-[sub_resource type="Animation" id=7]
+[sub_resource type="Animation" id=4]
 resource_name = "attack_right"
 length = 0.3
 tracks/0/type = "value"
@@ -193,7 +193,7 @@ tracks/3/keys = {
 "values": [ false, true ]
 }
 
-[sub_resource type="Animation" id=8]
+[sub_resource type="Animation" id=5]
 resource_name = "attack_up"
 length = 0.3
 tracks/0/type = "value"
@@ -245,13 +245,13 @@ tracks/3/keys = {
 "values": [ false, true ]
 }
 
-[sub_resource type="CircleShape2D" id=3]
+[sub_resource type="CircleShape2D" id=6]
 radius = 11.9368
 
-[sub_resource type="RectangleShape2D" id=4]
+[sub_resource type="RectangleShape2D" id=7]
 extents = Vector2( 12.5, 32 )
 
-[sub_resource type="SpriteFrames" id=5]
+[sub_resource type="SpriteFrames" id=8]
 animations = [ {
 "frames": [ ExtResource( 7 ) ],
 "loop": true,
@@ -270,20 +270,20 @@ offset = Vector2( 111.25, -318.057 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 anims/attack_down = SubResource( 2 )
-anims/attack_left = SubResource( 6 )
-anims/attack_right = SubResource( 7 )
-anims/attack_up = SubResource( 8 )
+anims/attack_left = SubResource( 3 )
+anims/attack_right = SubResource( 4 )
+anims/attack_up = SubResource( 5 )
 
 [node name="Movebox" type="CollisionShape2D" parent="."]
 position = Vector2( 0, 20.2043 )
-shape = SubResource( 3 )
+shape = SubResource( 6 )
 
 [node name="Hitbox" type="Area2D" parent="."]
 collision_layer = 4
 collision_mask = 8
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox"]
-shape = SubResource( 4 )
+shape = SubResource( 7 )
 
 [node name="Sword" type="Area2D" parent="."]
 position = Vector2( 0, 20.2043 )
@@ -292,9 +292,10 @@ collision_mask = 16
 script = ExtResource( 8 )
 
 [node name="SwordSprite" type="AnimatedSprite" parent="Sword"]
+visible = false
 position = Vector2( 0.561234, 0 )
 rotation = -1.57079
-frames = SubResource( 5 )
+frames = SubResource( 8 )
 animation = "down"
 
 [node name="CollisionShape2D" type="CollisionPolygon2D" parent="Sword"]
@@ -303,4 +304,5 @@ polygon = PoolVector2Array( -15.336, 47.0982, -31.3311, 47.6594, -45.6424, 44.57
 
 [node name="ComboResetTimer" type="Timer" parent="."]
 one_shot = true
+[connection signal="area_entered" from="Hitbox" to="." method="_on_Hitbox_area_entered"]
 [connection signal="timeout" from="ComboResetTimer" to="." method="_on_ComboResetTimer_timeout"]
