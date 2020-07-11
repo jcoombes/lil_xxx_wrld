@@ -9,8 +9,8 @@ const DECAY_DURATION: float = 1.0
 # time it takes to go from sustain speed to zero (seconds)
 const RELEASE_DURATION: float = 0.2
 
-const PEAK_SPEED: float = 100.0
-const SUSTAIN_SPEED: float = 50.0
+const PEAK_SPEED: float = 200.0
+const SUSTAIN_SPEED: float = 180.0
 
 var velocity := Vector2()
 var direction := Vector2()
