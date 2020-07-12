@@ -25,7 +25,7 @@ animations = [ {
 } ]
 
 [sub_resource type="CircleShape2D" id=2]
-radius = 24.0
+radius = 16.0
 
 [sub_resource type="CircleShape2D" id=3]
 radius = 32.0
@@ -49,9 +49,11 @@ frames = SubResource( 1 )
 animation = "side"
 
 [node name="MoveBox" type="CollisionShape2D" parent="."]
+position = Vector2( 0, 16 )
 shape = SubResource( 2 )
 
 [node name="DemonHitbox" type="Area2D" parent="."]
+position = Vector2( 0, 16 )
 collision_layer = 2147483664
 collision_mask = 2147483650
 
@@ -59,6 +61,7 @@ collision_mask = 2147483650
 shape = SubResource( 3 )
 
 [node name="DemonHurtbox" type="Area2D" parent="."]
+position = Vector2( 0, 16 )
 collision_layer = 8
 collision_mask = 4
 script = ExtResource( 3 )
