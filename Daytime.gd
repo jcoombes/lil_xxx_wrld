@@ -19,10 +19,11 @@ func _ready():
 
 
 func _on_Lyrics_faded_out():
-	if $"TextureProgress/VSlider".Value >= 70:
+	print("Val is " + str($"TextureProgress".value))
+	if $"TextureProgress".value >= 70:
 		gems = 1
 		emit_signal("fell_asleep", gems)
-	elif $"TextureProgress/VSlider".Value >= 40:
+	elif $"TextureProgress".value >= 40:
 		gems = 2
 		emit_signal("fell_asleep", gems)
 	else:
