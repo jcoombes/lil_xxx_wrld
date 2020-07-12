@@ -1,6 +1,7 @@
 extends Control
 
 signal fell_asleep
+var gems
 
 # Declare member variables here. Examples:
 # var a = 2
@@ -18,7 +19,16 @@ func _ready():
 
 
 func _on_Lyrics_faded_out():
-	emit_signal("fell_asleep")
+	print("Val is " + str($"TextureProgress".value))
+	if $"TextureProgress".value >= 70:
+		gems = 1
+		emit_signal("fell_asleep", gems)
+	elif $"TextureProgress".value >= 40:
+		gems = 2
+		emit_signal("fell_asleep", gems)
+	else:
+		gems = 3
+		emit_signal("fell_asleep", gems)
 
 
 func _on_Fall_Asleep_button_up():
@@ -26,4 +36,4 @@ func _on_Fall_Asleep_button_up():
 	
 	# skip transition if the player clicks the button twice
 	if asleep_presses == 2:
-		emit_signal("fell_asleep")
+		_on_Lyrics_faded_out()

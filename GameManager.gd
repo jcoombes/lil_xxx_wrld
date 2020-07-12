@@ -2,12 +2,12 @@ extends Node
 class_name GameManager
 
 
-enum Scenes {MAIN_MENU, DAYTIME, NIGHTMARE}
+enum Scenes {MAIN_MENU, DAYTIME, NIGHTMARE, AUDIONIMBUS}
 
 const MainMenu = preload("res://Main_menu.tscn")
 const Daytime = preload("res://Daytime.tscn")
 const Nightmare = preload("res://Nightmare.tscn")
-
+const AudioNimbus = preload("res://AudioNimbus.tscn")
 
 # Declare member variables here. Examples:
 # var a = 2
@@ -15,7 +15,9 @@ const Nightmare = preload("res://Nightmare.tscn")
 var score: int = 0
 var current_scene: int = Scenes.MAIN_MENU
 var current_scene_node: Node = null
-
+var days_elapsed: int = 0
+var gems_today: int = 0
+var gems_total: int = 0
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -63,13 +65,21 @@ func transition_to(scene_id: int) -> void:
 			error = current_scene_node.connect("victory", self, "_on_Nightmare_victory")
 			if error != OK:
 				print("Error: ", error)
+		
+		Scenes.AUDIONIMBUS:
+			current_scene_node = AudioNimbus.instance()
+			current_scene_node.setup(days_elapsed, gems_today, gems_total)
+			print("Setup audionimbus, " + str(days_elapsed))
+			self.add_child(current_scene_node)
 
 
 func _on_Main_Menu_game_start():
 	transition_to(Scenes.DAYTIME)
 
 
-func _on_Daytime_fell_asleep():
+func _on_Daytime_fell_asleep(gems_from_daytime):
+	self.gems_today = gems_from_daytime
+	self.gems_total += gems_from_daytime
 	transition_to(Scenes.NIGHTMARE)
 
 
@@ -78,4 +88,4 @@ func _on_Nightmare_defeat():
 
 
 func _on_Nightmare_victory():
-	transition_to(Scenes.DAYTIME)
+	transition_to(Scenes.AUDIONIMBUS)
