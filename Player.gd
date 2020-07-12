@@ -1,7 +1,7 @@
 extends KinematicBody2D
 class_name Player
 
-enum Behaviours {ALIVE, RECOILING, DEAD}
+enum Behaviours {ALIVE, RECOILING, STUNNED, DEAD}
 enum Envelope {ATTACK, DECAY, SUSTAIN, RELEASE}
 
 signal dead
@@ -15,6 +15,7 @@ const RELEASE_DURATION: float = 0.2
 
 const PEAK_SPEED: float = 200.0
 const SUSTAIN_SPEED: float = 180.0
+const KNOCKBACK_SPEED: float = 300.0
 
 var velocity := Vector2()
 var movement_direction := Vector2()
@@ -79,6 +80,8 @@ func _physics_process(delta: float) -> void:
 		Behaviours.ALIVE:
 			do_movement(delta)
 		Behaviours.RECOILING:
+			var _collision = move_and_collide(velocity * delta)
+		Behaviours.STUNNED:
 			var _collision = move_and_collide(velocity * delta)
 		Behaviours.DEAD:
 			pass
@@ -164,6 +167,10 @@ func _on_Hitbox_area_entered(area: Area2D) -> void:
 	if area is Weapon:
 		health -= area.damage
 		
+		state = Behaviours.STUNNED
+		($StunTimer as Timer).start()
+		velocity = (position - area.find_parent("Demon").position).normalized() * KNOCKBACK_SPEED
+		
 		if health <= 0.0:
 			emit_signal("dead", self)
 			state = Behaviours.DEAD
@@ -171,4 +178,8 @@ func _on_Hitbox_area_entered(area: Area2D) -> void:
 
 
 func _on_RecoilTimer_timeout():
+	state = Behaviours.ALIVE
+
+
+func _on_KnockbackTimer_timeout():
 	state = Behaviours.ALIVE
