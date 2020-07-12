@@ -265,7 +265,7 @@ script = ExtResource( 3 )
 [node name="AnimatedSprite" type="AnimatedSprite" parent="."]
 position = Vector2( -111.25, 318.057 )
 frames = SubResource( 1 )
-animation = "move_left"
+animation = "move_down"
 offset = Vector2( 111.25, -318.057 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
@@ -302,6 +302,7 @@ animation = "down"
 [node name="CollisionShape2D" type="CollisionPolygon2D" parent="Sword"]
 position = Vector2( 20.7655, 0 )
 polygon = PoolVector2Array( -15.336, 47.0982, -31.3311, 47.6594, -45.6424, 44.5726, -55.7446, 36.4347, -66.1273, 21.5621, -63.6018, 30.2612, -54.9028, 42.3276, -45.3619, 50.4655, -34.4179, 56.0778, -20.9483, 59.4453, -5.51447, 59.4453, 7.39384, 55.7973, 21.7053, 49.0626, 32.0881, 38.3992, 39.3841, 23.246, 43.3127, 7.81215, 43.0322, -7.90231, 37.9811, -25.0199, 29.5627, -39.3313, 18.8993, -49.9947, 7.67472, -57.5713, -6.91736, -28.668, 0.378637, -23.0556, 8.23586, -15.7596, 12.4451, -4.25438, 14.9706, 4.44471, 13.5675, 18.4755, 6.83268, 32.7868, -3.2695, 41.2053 )
+disabled = true
 
 [node name="ComboResetTimer" type="Timer" parent="."]
 one_shot = true
