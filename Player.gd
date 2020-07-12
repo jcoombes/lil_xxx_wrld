@@ -41,17 +41,25 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta: float) -> void:
-	if velocity.length() > 0.0:
-		if velocity.y > 0.0:
-			($AnimatedSprite as AnimatedSprite).play("move_down")
-		elif velocity.y < 0.0:
-			($AnimatedSprite as AnimatedSprite).play("move_up")
-		elif velocity.x > 0.0:
-			($AnimatedSprite as AnimatedSprite).play("move_right")
-		elif velocity.x < 0.0:
-			($AnimatedSprite as AnimatedSprite).play("move_left")
-	else:
-		($AnimatedSprite as AnimatedSprite).play("idle")
+	var angle: float = facing_direction.angle()
+	
+	if 7 * PI / 8 <= angle or angle < - 7 * PI / 8:
+		($AnimatedSprite as AnimatedSprite).play("move_left")
+	elif -7 * PI / 8 <= angle and angle < -5 * PI / 8:
+		($AnimatedSprite as AnimatedSprite).play("move_upleft")
+	elif -5 * PI / 8 <= angle and angle < -3 * PI / 8:
+		($AnimatedSprite as AnimatedSprite).play("move_up")
+	elif -3 * PI / 8 <= angle and angle < -PI / 8:
+		($AnimatedSprite as AnimatedSprite).play("move_upright")
+	elif -PI / 8 <= angle and angle < PI / 8:
+		($AnimatedSprite as AnimatedSprite).play("move_right")
+	elif PI / 8 <= angle and angle < 3 * PI / 8:
+		($AnimatedSprite as AnimatedSprite).play("move_downright")
+	elif 3 * PI / 8 <= angle and angle < 5 * PI / 8:
+		($AnimatedSprite as AnimatedSprite).play("move_down")
+	elif 5 * PI / 8 <= angle and angle < 7 * PI / 8:
+		($AnimatedSprite as AnimatedSprite).play("move_downleft")
+
 	
 	if Input.is_action_pressed("sword_attack") and state != Behaviours.STUNNED and not sword_cooling_down:
 		match combo:
@@ -70,17 +78,8 @@ func _process(_delta: float) -> void:
 		sword_cooling_down = true
 	
 
-func play_attack_animation(direction: Vector2) -> void:
-	if direction.y > 0.0:
-		($AnimationPlayer as AnimationPlayer).play("attack_down")
-	elif velocity.y < 0.0:
-		($AnimationPlayer as AnimationPlayer).play("attack_up")
-	elif velocity.x > 0.0:
-		($AnimationPlayer as AnimationPlayer).play("attack_right")
-	elif velocity.x < 0.0:
-		($AnimationPlayer as AnimationPlayer).play("attack_left")
-	else:
-		($AnimationPlayer as AnimationPlayer).play("attack_down")
+func play_attack_animation(_direction: Vector2) -> void:
+	($AnimationPlayer as AnimationPlayer).play("sword_attack")
 
 
 func _physics_process(delta: float) -> void:
