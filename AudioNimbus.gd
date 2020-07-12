@@ -1,5 +1,6 @@
 extends Control
 
+signal scene_end
 
 # Declare member variables here. Examples:
 # var a = 2
@@ -30,3 +31,8 @@ func _ready():
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 #func _process(delta):
 #	pass
+
+
+func _process(_delta: float) -> void:
+	if Input.is_action_just_pressed("ui_accept"):
+		emit_signal("scene_end")

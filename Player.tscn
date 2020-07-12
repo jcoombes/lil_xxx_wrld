@@ -24,16 +24,6 @@ animations = [ {
 "name": "move_upright",
 "speed": 5.0
 }, {
-"frames": [ ExtResource( 11 ) ],
-"loop": true,
-"name": "move_downright",
-"speed": 5.0
-}, {
-"frames": [ ExtResource( 10 ) ],
-"loop": true,
-"name": "move_upleft",
-"speed": 5.0
-}, {
 "frames": [ ExtResource( 5 ) ],
 "loop": true,
 "name": "move_downleft",
@@ -49,6 +39,16 @@ animations = [ {
 "name": "move_left",
 "speed": 5.0
 }, {
+"frames": [ ExtResource( 10 ) ],
+"loop": true,
+"name": "move_upleft",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 11 ) ],
+"loop": true,
+"name": "move_downright",
+"speed": 5.0
+}, {
 "frames": [ ExtResource( 6 ) ],
 "loop": true,
 "name": "move_up",
@@ -60,7 +60,7 @@ animations = [ {
 "speed": 5.0
 } ]
 
-[sub_resource type="Animation" id=5]
+[sub_resource type="Animation" id=2]
 resource_name = "sword_attack"
 length = 0.3
 tracks/0/type = "value"
@@ -88,13 +88,13 @@ tracks/1/keys = {
 "values": [ false, true ]
 }
 
-[sub_resource type="CircleShape2D" id=6]
+[sub_resource type="CircleShape2D" id=3]
 radius = 11.9368
 
-[sub_resource type="RectangleShape2D" id=7]
+[sub_resource type="RectangleShape2D" id=4]
 extents = Vector2( 12.5, 11.9687 )
 
-[sub_resource type="SpriteFrames" id=8]
+[sub_resource type="SpriteFrames" id=5]
 animations = [ {
 "frames": [ ExtResource( 7 ) ],
 "loop": true,
@@ -113,11 +113,11 @@ animation = "move_up"
 offset = Vector2( 111.25, -318.057 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-anims/sword_attack = SubResource( 5 )
+anims/sword_attack = SubResource( 2 )
 
 [node name="Movebox" type="CollisionShape2D" parent="."]
 position = Vector2( 0, 20.2043 )
-shape = SubResource( 6 )
+shape = SubResource( 3 )
 
 [node name="Hitbox" type="Area2D" parent="."]
 collision_layer = 4
@@ -125,7 +125,7 @@ collision_mask = 8
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox"]
 position = Vector2( 0, 20.2043 )
-shape = SubResource( 7 )
+shape = SubResource( 4 )
 
 [node name="Sword" type="Area2D" parent="."]
 position = Vector2( 0, 20.2043 )
@@ -134,9 +134,10 @@ collision_mask = 16
 script = ExtResource( 8 )
 
 [node name="SwordSprite" type="AnimatedSprite" parent="Sword"]
+visible = false
 position = Vector2( 0.561234, 0 )
 rotation = -1.57079
-frames = SubResource( 8 )
+frames = SubResource( 5 )
 animation = "down"
 
 [node name="CollisionShape2D" type="CollisionPolygon2D" parent="Sword"]

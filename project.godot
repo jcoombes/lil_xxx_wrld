@@ -48,11 +48,13 @@ gdscript/warnings/treat_warnings_as_errors=true
 
 [layer_names]
 
-2d_physics/layer_1="Physics"
+2d_physics/layer_1="Environment"
 2d_physics/layer_2="Player Attack"
 2d_physics/layer_3="Player Hitbox"
 2d_physics/layer_4="Enemy Attack"
 2d_physics/layer_5="Enemy Hitbox"
+2d_physics/layer_6="Player Movebox"
+2d_physics/layer_7="Enemy Movebox"
 
 [physics]
 
