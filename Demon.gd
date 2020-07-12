@@ -28,9 +28,25 @@ func _ready():
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta: float) -> void:
 	z_index = int(position.y)
+
+	var angle: float = velocity.angle()
 	
-	if health <= 0.0:
-		emit_signal("dead", self)
+	if 7 * PI / 8 <= angle or angle < - 7 * PI / 8:
+		($AnimatedSprite as AnimatedSprite).play("down")
+	elif -7 * PI / 8 <= angle and angle < -5 * PI / 8:
+		($AnimatedSprite as AnimatedSprite).play("side")
+	elif -5 * PI / 8 <= angle and angle < -3 * PI / 8:
+		($AnimatedSprite as AnimatedSprite).play("up")
+	elif -3 * PI / 8 <= angle and angle < -PI / 8:
+		($AnimatedSprite as AnimatedSprite).play("side")
+	elif -PI / 8 <= angle and angle < PI / 8:
+		($AnimatedSprite as AnimatedSprite).play("down")
+	elif PI / 8 <= angle and angle < 3 * PI / 8:
+		($AnimatedSprite as AnimatedSprite).play("side")
+	elif 3 * PI / 8 <= angle and angle < 5 * PI / 8:
+		($AnimatedSprite as AnimatedSprite).play("up")
+	elif 5 * PI / 8 <= angle and angle < 7 * PI / 8:
+		($AnimatedSprite as AnimatedSprite).play("side")
 
 
 func _physics_process(delta: float) -> void:
@@ -49,6 +65,10 @@ func _on_Hitbox_area_entered(area: Area2D) -> void:
 		state = Behaviours.STUNNED
 		($StunTimer as Timer).start()
 		velocity = (position - area.find_parent("*Player*").position).normalized() * KNOCKBACK_SPEED
+			
+		if health <= 0.0:
+			emit_signal("dead", self)
+
 
 func _on_WanderTimer_timeout() -> void:
 	var p: float = randf()
