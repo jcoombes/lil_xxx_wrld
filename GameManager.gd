@@ -55,7 +55,7 @@ func transition_to(scene_id: int) -> void:
 		
 		Scenes.NIGHTMARE:
 			current_scene_node = Nightmare.instance()
-			current_scene_node.setup(4)
+			current_scene_node.setup(gems_today)
 			self.add_child(current_scene_node)
 			
 			var error: int = current_scene_node.connect("defeat", self, "_on_Nightmare_defeat")
@@ -71,6 +71,10 @@ func transition_to(scene_id: int) -> void:
 			current_scene_node.setup(days_elapsed, gems_today, gems_total)
 			print("Setup audionimbus, " + str(days_elapsed))
 			self.add_child(current_scene_node)
+			
+			var error: int = current_scene_node.connect("scene_end", self, "_on_AudioNimbus_scene_end")
+			if error != OK:
+				print("Error: ", error)
 
 
 func _on_Main_Menu_game_start():
@@ -78,8 +82,8 @@ func _on_Main_Menu_game_start():
 
 
 func _on_Daytime_fell_asleep(gems_from_daytime):
-	self.gems_today = gems_from_daytime
-	self.gems_total += gems_from_daytime
+	gems_today = gems_from_daytime
+	gems_total += gems_from_daytime
 	transition_to(Scenes.NIGHTMARE)
 
 
@@ -89,3 +93,7 @@ func _on_Nightmare_defeat():
 
 func _on_Nightmare_victory():
 	transition_to(Scenes.AUDIONIMBUS)
+
+
+func _on_AudioNimbus_scene_end():
+	transition_to(Scenes.DAYTIME)
