@@ -7,8 +7,9 @@ signal dead
 
 # Declare member variables here. Examples:
 # var a = 2
-# var b = "text"
-const WANDER_SPEED: float = 100.0
+# var b = "text"]
+const CHASE_SPEED: float = 120.0
+const WANDER_SPEED: float = 50.0
 const KNOCKBACK_SPEED: float = 500.0
 
 var health: float = 10.0
@@ -18,6 +19,8 @@ var target: PhysicsBody2D = null
 
 var wander_direction := Vector2()
 var velocity := Vector2()
+
+var player: Player = null
 
 
 # Called when the node enters the scene tree for the first time.
@@ -53,6 +56,10 @@ func _physics_process(delta: float) -> void:
 	match state:
 		Behaviours.WANDER:
 			velocity = WANDER_SPEED * wander_direction
+		Behaviours.CHASE:
+			if player != null:
+				var chase_direction: Vector2 = (player.position - position).normalized()
+				velocity = CHASE_SPEED * chase_direction
 		_:
 			pass
 	
@@ -81,4 +88,20 @@ func _on_WanderTimer_timeout() -> void:
 
 
 func _on_StunTimer_timeout():
-	state = Behaviours.WANDER
+	if player != null:
+		state = Behaviours.CHASE
+	else:
+		state = Behaviours.WANDER
+
+
+func _on_SightCone_body_entered(body):
+	if "Player" in body.name:
+		print("Chasing ", body.name)
+		player = (body as Player)
+		state = Behaviours.CHASE
+
+func _on_SightCone_body_exited(body):
+	if body == player:
+		print("Giving up the chase")
+		player = null
+		state = Behaviours.WANDER
