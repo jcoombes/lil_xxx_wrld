@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=2]
+[gd_scene load_steps=17 format=2]
 
 [ext_resource path="res://assets/daytime/purple emerald cropped.png" type="Texture" id=1]
 [ext_resource path="res://assets/daytime/black.png" type="Texture" id=2]
@@ -14,6 +14,12 @@
 [ext_resource path="res://Amethyst 1.gd" type="Script" id=12]
 [ext_resource path="res://Amethyst 5.gd" type="Script" id=13]
 [ext_resource path="res://Daytime.gd" type="Script" id=14]
+
+[sub_resource type="InputEventAction" id=1]
+action = "ui_accept"
+
+[sub_resource type="ShortCut" id=2]
+shortcut = SubResource( 1 )
 
 [node name="Control" type="Control"]
 anchor_left = -0.000869989
@@ -45,6 +51,7 @@ margin_left = 126.42
 margin_top = 450.116
 margin_right = 500.42
 margin_bottom = 576.116
+shortcut = SubResource( 2 )
 text = "Write Lyrics and Fall Asleep"
 __meta__ = {
 "_edit_use_anchors_": false
@@ -113,17 +120,6 @@ __meta__ = {
 [node name="LyricsTimer" type="Timer" parent="Lyrics"]
 wait_time = 0.1
 autostart = true
-
-[node name="CurtainFall" type="ColorRect" parent="."]
-margin_left = -24.3478
-margin_top = -34.7825
-margin_right = 1840.65
-margin_bottom = 766.218
-mouse_filter = 2
-color = Color( 0, 0, 0, 0 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="Amethyst 1" type="TextureRect" parent="."]
 margin_left = 129.954
@@ -196,12 +192,24 @@ script = ExtResource( 9 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="CurtainFall" type="ColorRect" parent="."]
+margin_left = -24.3478
+margin_top = -34.7825
+margin_right = 1840.65
+margin_bottom = 766.218
+mouse_filter = 2
+color = Color( 0, 0, 0, 0 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
 [connection signal="button_up" from="Fall Asleep" to="Lyrics" method="_on_Fall_Asleep_button_up"]
-[connection signal="value_changed" from="TextureProgress/VSlider" to="Amethyst 4" method="_on_VSlider_value_changed"]
-[connection signal="value_changed" from="TextureProgress/VSlider" to="Amethyst 3" method="_on_VSlider_value_changed"]
+[connection signal="button_up" from="Fall Asleep" to="." method="_on_Fall_Asleep_button_up"]
+[connection signal="value_changed" from="TextureProgress/VSlider" to="Amethyst 5" method="_on_VSlider_value_changed"]
 [connection signal="value_changed" from="TextureProgress/VSlider" to="Amethyst 1" method="_on_VSlider_value_changed"]
 [connection signal="value_changed" from="TextureProgress/VSlider" to="Amethyst 2" method="_on_VSlider_value_changed"]
 [connection signal="value_changed" from="TextureProgress/VSlider" to="Amethyst 6" method="_on_VSlider_value_changed"]
-[connection signal="value_changed" from="TextureProgress/VSlider" to="Amethyst 5" method="_on_VSlider_value_changed"]
+[connection signal="value_changed" from="TextureProgress/VSlider" to="Amethyst 4" method="_on_VSlider_value_changed"]
+[connection signal="value_changed" from="TextureProgress/VSlider" to="Amethyst 3" method="_on_VSlider_value_changed"]
 [connection signal="value_changed" from="TextureProgress/VSlider" to="TextureProgress" method="_on_VSlider_value_changed"]
 [connection signal="faded_out" from="Lyrics" to="." method="_on_Lyrics_faded_out"]

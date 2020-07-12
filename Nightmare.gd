@@ -28,7 +28,14 @@ func spawn_player():
 	player.position = spawn_point
 	player.velocity = Vector2()
 	
+	($"UI/HealthBar" as TextureProgress).max_value = player.health
+	($"UI/HealthBar" as TextureProgress).min_value = 0
+	
 	var error: int = player.connect("dead", self, "_on_Player_dead")
+	if error != OK:
+		print("Error: ", error)
+	
+	error = player.connect("health_changed", self, "_on_Player_health_changed")
 	if error != OK:
 		print("Error: ", error)
 
@@ -44,7 +51,11 @@ func _on_Player_dead(player: Player) -> void:
 	else:
 		emit_signal("defeat")
 	
-	
+
+func _on_Player_health_changed(_player: Player, new_value: float) -> void:
+	($"UI/HealthBar" as TextureProgress).value = new_value
+
+
 func spawn_demon():
 	var demon: Demon = Demon.instance()
 	self.add_child(demon)

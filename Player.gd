@@ -1,9 +1,10 @@
 extends KinematicBody2D
 class_name Player
 
-enum Behaviours {ALIVE, RECOILING, DEAD}
+enum Behaviours {ALIVE, RECOILING, STUNNED, DEAD}
 enum Envelope {ATTACK, DECAY, SUSTAIN, RELEASE}
 
+signal health_changed
 signal dead
 
 # time it takes to hit max speed (seconds)
@@ -15,16 +16,23 @@ const RELEASE_DURATION: float = 0.2
 
 const PEAK_SPEED: float = 200.0
 const SUSTAIN_SPEED: float = 180.0
+const KNOCKBACK_SPEED: float = 300.0
 
 var velocity := Vector2()
 var movement_direction := Vector2()
 var facing_direction := Vector2()
 var _phase: int = Envelope.RELEASE
 var combo: int = 0
+var sword_cooling_down: bool = false
 
-var health: float = 10.0
+var health: float = 10.0 setget set_health
 var state: int = Behaviours.ALIVE
 
+
+func set_health(value: float) -> void:
+	health = value
+	emit_signal("health_changed", self, value)
+	
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -45,8 +53,7 @@ func _process(_delta: float) -> void:
 	else:
 		($AnimatedSprite as AnimatedSprite).play("idle")
 	
-	# borrowing "accept" for "attack"
-	if Input.is_action_just_pressed("ui_accept"):
+	if Input.is_action_pressed("sword_attack") and state != Behaviours.STUNNED and not sword_cooling_down:
 		match combo:
 			0:
 				# swing to the right
@@ -59,6 +66,8 @@ func _process(_delta: float) -> void:
 				play_attack_animation(facing_direction)
 				combo = 0
 		($ComboResetTimer as Timer).start()
+		($SwordCooldownTimer as Timer).start()
+		sword_cooling_down = true
 	
 
 func play_attack_animation(direction: Vector2) -> void:
@@ -78,10 +87,31 @@ func _physics_process(delta: float) -> void:
 	match state:
 		Behaviours.ALIVE:
 			do_movement(delta)
+			do_facing(delta)
 		Behaviours.RECOILING:
+			var _collision = move_and_collide(velocity * delta)
+			do_facing(delta)
+		Behaviours.STUNNED:
 			var _collision = move_and_collide(velocity * delta)
 		Behaviours.DEAD:
 			pass
+
+
+func do_facing(_delta: float) -> void:
+	var new_direction := Vector2()
+	
+	if Input.is_action_pressed("face_right"):
+		new_direction.x += 1
+	if Input.is_action_pressed("face_left"):
+		new_direction.x -= 1
+	if Input.is_action_pressed("face_up"):
+		new_direction.y -= 1
+	if Input.is_action_pressed("face_down"):
+		new_direction.y += 1
+	
+	if new_direction.length() > 0:
+		new_direction = new_direction.normalized()
+		facing_direction = new_direction
 
 
 func do_movement(delta: float) -> void:
@@ -162,7 +192,11 @@ func _on_ComboResetTimer_timeout():
 
 func _on_Hitbox_area_entered(area: Area2D) -> void:
 	if area is Weapon:
-		health -= area.damage
+		set_health(health - area.damage)
+		
+		state = Behaviours.STUNNED
+		($StunTimer as Timer).start()
+		velocity = (position  - area.find_parent("*Demon*").position).normalized() * KNOCKBACK_SPEED
 		
 		if health <= 0.0:
 			emit_signal("dead", self)
@@ -172,3 +206,11 @@ func _on_Hitbox_area_entered(area: Area2D) -> void:
 
 func _on_RecoilTimer_timeout():
 	state = Behaviours.ALIVE
+
+
+func _on_KnockbackTimer_timeout():
+	state = Behaviours.ALIVE
+
+
+func _on_SwordCooldownTimer_timeout():
+	sword_cooling_down = false

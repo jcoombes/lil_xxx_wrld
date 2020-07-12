@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/attack.png-717e9b9fc51e881ec183aa6ff3db4cfb.stex"
+path="res://.import/purplered_heart.png-b8d3ba1d0e2d66670f94808b2aed157c.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/player/attack.png"
-dest_files=[ "res://.import/attack.png-717e9b9fc51e881ec183aa6ff3db4cfb.stex" ]
+source_file="res://assets/nightmare/purplered_heart.png"
+dest_files=[ "res://.import/purplered_heart.png-b8d3ba1d0e2d66670f94808b2aed157c.stex" ]
 
 [params]
 
