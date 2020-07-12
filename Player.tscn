@@ -315,7 +315,12 @@ one_shot = true
 [node name="StunTimer" type="Timer" parent="."]
 wait_time = 0.1
 one_shot = true
+
+[node name="SwordCooldownTimer" type="Timer" parent="."]
+wait_time = 0.5
+one_shot = true
 [connection signal="area_entered" from="Hitbox" to="." method="_on_Hitbox_area_entered"]
 [connection signal="timeout" from="ComboResetTimer" to="." method="_on_ComboResetTimer_timeout"]
 [connection signal="timeout" from="RecoilTimer" to="." method="_on_RecoilTimer_timeout"]
 [connection signal="timeout" from="StunTimer" to="." method="_on_KnockbackTimer_timeout"]
+[connection signal="timeout" from="SwordCooldownTimer" to="." method="_on_SwordCooldownTimer_timeout"]

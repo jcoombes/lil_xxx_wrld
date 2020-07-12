@@ -23,7 +23,7 @@ var movement_direction := Vector2()
 var facing_direction := Vector2()
 var _phase: int = Envelope.RELEASE
 var combo: int = 0
-var cooling_down: bool = false
+var sword_cooling_down: bool = false
 
 var health: float = 10.0 setget set_health
 var state: int = Behaviours.ALIVE
@@ -54,7 +54,7 @@ func _process(_delta: float) -> void:
 		($AnimatedSprite as AnimatedSprite).play("idle")
 	
 	# borrowing "accept" for "attack"
-	if Input.is_action_just_pressed("sword_attack") and state != Behaviours.STUNNED:
+	if Input.is_action_just_pressed("sword_attack") and state != Behaviours.STUNNED and not sword_cooling_down:
 		match combo:
 			0:
 				# swing to the right
@@ -67,6 +67,8 @@ func _process(_delta: float) -> void:
 				play_attack_animation(facing_direction)
 				combo = 0
 		($ComboResetTimer as Timer).start()
+		($SwordCooldownTimer as Timer).start()
+		sword_cooling_down = true
 	
 
 func play_attack_animation(direction: Vector2) -> void:
@@ -209,3 +211,7 @@ func _on_RecoilTimer_timeout():
 
 func _on_KnockbackTimer_timeout():
 	state = Behaviours.ALIVE
+
+
+func _on_SwordCooldownTimer_timeout():
+	sword_cooling_down = false
