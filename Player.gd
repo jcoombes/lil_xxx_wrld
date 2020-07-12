@@ -175,7 +175,7 @@ func _on_Hitbox_area_entered(area: Area2D) -> void:
 		
 		state = Behaviours.STUNNED
 		($StunTimer as Timer).start()
-		velocity = (position - area.find_parent("Demon").position).normalized() * KNOCKBACK_SPEED
+		velocity = (position  - area.position).normalized() * KNOCKBACK_SPEED
 		
 		if health <= 0.0:
 			emit_signal("dead", self)

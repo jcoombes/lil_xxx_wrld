@@ -260,6 +260,7 @@ animations = [ {
 } ]
 
 [node name="Player" type="KinematicBody2D"]
+collision_layer = 32
 script = ExtResource( 3 )
 
 [node name="AnimatedSprite" type="AnimatedSprite" parent="."]

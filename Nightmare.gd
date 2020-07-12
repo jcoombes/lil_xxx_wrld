@@ -53,9 +53,7 @@ func _on_Player_dead(player: Player) -> void:
 	
 
 func _on_Player_health_changed(_player: Player, new_value: float) -> void:
-	print("setting healthbar value to ", new_value)
 	($"UI/HealthBar" as TextureProgress).value = new_value
-	print("healthbar value ", ($"UI/HealthBar" as TextureProgress).value)
 
 
 func spawn_demon():

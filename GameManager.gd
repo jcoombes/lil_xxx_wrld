@@ -53,7 +53,7 @@ func transition_to(scene_id: int) -> void:
 		
 		Scenes.NIGHTMARE:
 			current_scene_node = Nightmare.instance()
-			current_scene_node.setup(1)
+			current_scene_node.setup(4)
 			self.add_child(current_scene_node)
 			
 			var error: int = current_scene_node.connect("defeat", self, "_on_Nightmare_defeat")
