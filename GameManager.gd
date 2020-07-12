@@ -48,6 +48,7 @@ func transition_to(scene_id: int) -> void:
 			
 		Scenes.DAYTIME:
 			current_scene_node = Daytime.instance()
+			current_scene_node.setup(gems_today)
 			self.add_child(current_scene_node)
 			var error: int = current_scene_node.connect("fell_asleep", self, "_on_Daytime_fell_asleep")
 			if error != OK:
@@ -55,7 +56,7 @@ func transition_to(scene_id: int) -> void:
 		
 		Scenes.NIGHTMARE:
 			current_scene_node = Nightmare.instance()
-			current_scene_node.setup(gems_today)
+			current_scene_node.setup(gems_total)
 			self.add_child(current_scene_node)
 			
 			var error: int = current_scene_node.connect("defeat", self, "_on_Nightmare_defeat")
