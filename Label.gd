@@ -1,8 +1,10 @@
 extends Label
+
+signal faded_out
+
 # Declare member variables here. Examples:
 # var a = 2
 # var b = "text"
-
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -50,10 +52,10 @@ func _on_Fall_Asleep_button_up():
 	
 	while self.visible_characters <= self.text.length():
 		self.visible_characters += 1
-		yield(get_tree().create_timer(0.1), "timeout")
+		yield(($LyricsTimer as Timer), "timeout")
 		$"../CurtainFall".color[3] += 0.01
 		if $"../CurtainFall".color[3] > 1.0:
-			var _k = get_tree().change_scene("res://Nightmare.tscn")
+			emit_signal("faded_out")
 			break
 	return
 	

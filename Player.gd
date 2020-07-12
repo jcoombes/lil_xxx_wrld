@@ -1,6 +1,7 @@
 extends KinematicBody2D
+class_name Player
 
-enum Behaviours {ALIVE, DEAD}
+enum Behaviours {ALIVE, RECOILING, DEAD}
 enum Envelope {ATTACK, DECAY, SUSTAIN, RELEASE}
 
 signal dead
@@ -77,6 +78,8 @@ func _physics_process(delta: float) -> void:
 	match state:
 		Behaviours.ALIVE:
 			do_movement(delta)
+		Behaviours.RECOILING:
+			var _collision = move_and_collide(velocity * delta)
 		Behaviours.DEAD:
 			pass
 
@@ -126,7 +129,6 @@ func do_movement(delta: float) -> void:
 	match _phase:
 		Envelope.ATTACK:
 			acceleration = (PEAK_SPEED - 0.0) / ATTACK_DURATION
-			min_speed = 0.0
 			max_speed = PEAK_SPEED
 		Envelope.DECAY:
 			acceleration = (SUSTAIN_SPEED - PEAK_SPEED) / DECAY_DURATION
@@ -137,8 +139,9 @@ func do_movement(delta: float) -> void:
 		Envelope.RELEASE:
 			acceleration = (0.0 - SUSTAIN_SPEED) / RELEASE_DURATION
 	
+	# velocity might not be in the direction of motion because of knockback
 	velocity = clamp(speed + delta * acceleration, min_speed, max_speed) * movement_direction
-	
+
 	var _collision = move_and_collide(velocity * delta)
 
 func _integrate_forces(_state: Physics2DDirectBodyState) -> void:
@@ -146,17 +149,26 @@ func _integrate_forces(_state: Physics2DDirectBodyState) -> void:
 
 
 func _on_Sword_area_entered(area: Area2D) -> void:
-	area.take_damage()
+	var recoil_direction: Vector2 = (position - area.find_parent("Demon").position).normalize()
+	velocity = $Sword.recoil * recoil_direction
+	state = Behaviours.RECOILING
+	_phase = Envelope.RELEASE
+	($RecoilTimer as Timer).start()
 
 
 func _on_ComboResetTimer_timeout():
 	combo = 0
 
 
-func _on_Hitbox_area_entered(area):
-	health -= area.damage
-	
-	if health <= 0.0:
-		emit_signal("dead")
-		state = Behaviours.DEAD
-		($AnimatedSprite as AnimatedSprite).visible = false
+func _on_Hitbox_area_entered(area: Area2D) -> void:
+	if area is Weapon:
+		health -= area.damage
+		
+		if health <= 0.0:
+			emit_signal("dead", self)
+			state = Behaviours.DEAD
+			($AnimatedSprite as AnimatedSprite).visible = false
+
+
+func _on_RecoilTimer_timeout():
+	state = Behaviours.ALIVE

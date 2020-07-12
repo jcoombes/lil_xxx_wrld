@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=2]
+[gd_scene load_steps=15 format=2]
 
 [ext_resource path="res://assets/daytime/purple emerald cropped.png" type="Texture" id=1]
 [ext_resource path="res://assets/daytime/black.png" type="Texture" id=2]
@@ -13,6 +13,7 @@
 [ext_resource path="res://Amethyst 2.gd" type="Script" id=11]
 [ext_resource path="res://Amethyst 1.gd" type="Script" id=12]
 [ext_resource path="res://Amethyst 5.gd" type="Script" id=13]
+[ext_resource path="res://Daytime.gd" type="Script" id=14]
 
 [node name="Control" type="Control"]
 anchor_left = -0.000869989
@@ -23,6 +24,7 @@ margin_left = -6.73474
 margin_top = 3.3674
 margin_right = -6.73474
 margin_bottom = 3.36743
+script = ExtResource( 14 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -107,6 +109,10 @@ script = ExtResource( 3 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="LyricsTimer" type="Timer" parent="Lyrics"]
+wait_time = 0.1
+autostart = true
 
 [node name="CurtainFall" type="ColorRect" parent="."]
 margin_left = -24.3478
@@ -198,3 +204,4 @@ __meta__ = {
 [connection signal="value_changed" from="TextureProgress/VSlider" to="Amethyst 3" method="_on_VSlider_value_changed"]
 [connection signal="value_changed" from="TextureProgress/VSlider" to="Amethyst 4" method="_on_VSlider_value_changed"]
 [connection signal="value_changed" from="TextureProgress/VSlider" to="Amethyst 1" method="_on_VSlider_value_changed"]
+[connection signal="faded_out" from="Lyrics" to="." method="_on_Lyrics_faded_out"]

@@ -1,5 +1,6 @@
 extends Control
 
+signal game_start
 
 # Declare member variables here. Examples:
 # var a = 2
@@ -15,7 +16,12 @@ func _ready():
 #func _process(delta):
 #	pass
 
-var k
+
+func _on_New_Game_button_up():
+	emit_signal("game_start")
+	print("signals emitted all up in this bitch")
+
+
 func _on_New_Game_pressed():
-	k = get_tree().change_scene("res://Daytime.tscn")
-	pass
+	emit_signal("game_start")  #pass # Replace with function body.
+	print("you really pressed that button")
