@@ -95,4 +95,5 @@ func _on_Nightmare_victory():
 
 
 func _on_AudioNimbus_scene_end():
+	days_elapsed += 1
 	transition_to(Scenes.DAYTIME)
