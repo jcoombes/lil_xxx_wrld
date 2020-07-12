@@ -48,7 +48,7 @@ func _on_Hitbox_area_entered(area: Area2D) -> void:
 		health -= area.damage
 		state = Behaviours.STUNNED
 		($StunTimer as Timer).start()
-		velocity = (position - area.position).normalized() * KNOCKBACK_SPEED
+		velocity = (position - area.find_parent("*Player*").position).normalized() * KNOCKBACK_SPEED
 
 func _on_WanderTimer_timeout() -> void:
 	var p: float = randf()
