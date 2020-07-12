@@ -54,7 +54,7 @@ func _process(_delta: float) -> void:
 		($AnimatedSprite as AnimatedSprite).play("idle")
 	
 	# borrowing "accept" for "attack"
-	if Input.is_action_just_pressed("ui_accept") and state != Behaviours.STUNNED:
+	if Input.is_action_just_pressed("sword_attack") and state != Behaviours.STUNNED:
 		match combo:
 			0:
 				# swing to the right
