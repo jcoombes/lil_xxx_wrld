@@ -39,7 +39,7 @@ animations = [ {
 
 [sub_resource type="Animation" id=2]
 resource_name = "attack_down"
-length = 0.3
+length = 0.5
 tracks/0/type = "value"
 tracks/0/path = NodePath("AnimatedSprite:frame")
 tracks/0/interp = 1
