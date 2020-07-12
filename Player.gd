@@ -23,6 +23,7 @@ var movement_direction := Vector2()
 var facing_direction := Vector2()
 var _phase: int = Envelope.RELEASE
 var combo: int = 0
+var cooling_down: bool = false
 
 var health: float = 10.0 setget set_health
 var state: int = Behaviours.ALIVE
@@ -53,7 +54,7 @@ func _process(_delta: float) -> void:
 		($AnimatedSprite as AnimatedSprite).play("idle")
 	
 	# borrowing "accept" for "attack"
-	if Input.is_action_just_pressed("ui_accept"):
+	if Input.is_action_just_pressed("ui_accept") and state != Behaviours.STUNNED:
 		match combo:
 			0:
 				# swing to the right
@@ -85,12 +86,31 @@ func _physics_process(delta: float) -> void:
 	match state:
 		Behaviours.ALIVE:
 			do_movement(delta)
+			do_facing(delta)
 		Behaviours.RECOILING:
 			var _collision = move_and_collide(velocity * delta)
+			do_facing(delta)
 		Behaviours.STUNNED:
 			var _collision = move_and_collide(velocity * delta)
 		Behaviours.DEAD:
 			pass
+
+
+func do_facing(_delta: float) -> void:
+	var new_direction := Vector2()
+	
+	if Input.is_action_pressed("face_right"):
+		new_direction.x += 1
+	if Input.is_action_pressed("face_left"):
+		new_direction.x -= 1
+	if Input.is_action_pressed("face_up"):
+		new_direction.y -= 1
+	if Input.is_action_pressed("face_down"):
+		new_direction.y += 1
+	
+	if new_direction.length() > 0:
+		new_direction = new_direction.normalized()
+		facing_direction = new_direction
 
 
 func do_movement(delta: float) -> void:
