@@ -21,25 +21,30 @@ func setup(min_gems_: int) -> void:
 func set_min_gems(min_gems_: int) -> void:
 	min_gems = min_gems_
 	
-	var slider: VSlider = ($"TextureProgress/VSlider" as VSlider)
+	var slider: TextureProgress = ($TextureProgress as TextureProgress)
 	
 	match min_gems:
-		0:
-			slider.cap = 100
-			slider.value = 100
-		1: 
-			slider.cap = 70
-			slider.value = 70
+		0: 
+			slider.cap = 100.0
+			slider.value = 100.0
+		1:
+			slider.cap = 70.0
+			slider.value = 70.0
 		2:
-			slider.cap = 40
-			slider.value = 40
+			slider.cap = 40.0
+			slider.value = 40.0
 		_:
-			slider.cap = 0
-			slider.cap = 0
+			slider.cap = 0.0
+			slider.value = 0.0
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-#func _process(delta):
-#	pass
+func _process(_delta: float) -> void:
+	var slider: VSlider = $"TextureProgress/VSlider" as VSlider
+	
+	if Input.is_action_pressed("ui_down"):
+		slider.value -= 1
+	if Input.is_action_pressed("ui_up"):
+		slider.value += 1
 
 
 func _on_Lyrics_faded_out():

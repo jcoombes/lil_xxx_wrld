@@ -24,9 +24,7 @@ func _ready():
 	transition_to(Scenes.MAIN_MENU)
 
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-#func _process(delta):
-#	pass
+
 
 
 func transition_to(scene_id: int) -> void:

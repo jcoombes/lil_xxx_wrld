@@ -18,10 +18,11 @@ func _ready():
 
 var previously_made_visible = false
 
-func _on_VSlider_value_changed(value):
-	if value < 70:
+
+func _on_TextureProgress_value_changed(value):
+	if value <= 70:
 		self.visible = true
 		previously_made_visible = true
-	elif previously_made_visible and value >= 70:
+	elif previously_made_visible and value > 70:
 		self.visible = false
 		previously_made_visible = false
