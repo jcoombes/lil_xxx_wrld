@@ -204,6 +204,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 [connection signal="button_up" from="Fall Asleep" to="Lyrics" method="_on_Fall_Asleep_button_up"]
+[connection signal="value_changed" from="TextureProgress/VSlider" to="TextureProgress/VSlider" method="_on_VSlider_value_changed"]
 [connection signal="value_changed" from="TextureProgress/VSlider" to="Amethyst 5" method="_on_VSlider_value_changed"]
 [connection signal="value_changed" from="TextureProgress/VSlider" to="Amethyst 6" method="_on_VSlider_value_changed"]
 [connection signal="value_changed" from="TextureProgress/VSlider" to="Amethyst 1" method="_on_VSlider_value_changed"]

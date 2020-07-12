@@ -2,6 +2,7 @@ extends Control
 
 signal fell_asleep
 var gems
+var min_gems: int = 0 setget set_min_gems
 
 # Declare member variables here. Examples:
 # var a = 2
@@ -12,6 +13,29 @@ var asleep_presses = 0
 func _ready():
 	pass # Replace with function body.
 
+
+func setup(min_gems_: int) -> void:
+	set_min_gems(min_gems_)
+
+
+func set_min_gems(min_gems_: int) -> void:
+	min_gems = min_gems_
+	
+	var slider: VSlider = ($"TextureProgress/VSlider" as VSlider)
+	
+	match min_gems:
+		0:
+			slider.cap = 100
+			slider.value = 100
+		1: 
+			slider.cap = 70
+			slider.value = 70
+		2:
+			slider.cap = 40
+			slider.value = 40
+		_:
+			slider.cap = 0
+			slider.cap = 0
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 #func _process(delta):
