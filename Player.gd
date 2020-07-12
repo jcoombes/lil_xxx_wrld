@@ -4,6 +4,7 @@ class_name Player
 enum Behaviours {ALIVE, RECOILING, STUNNED, DEAD}
 enum Envelope {ATTACK, DECAY, SUSTAIN, RELEASE}
 
+signal health_changed
 signal dead
 
 # time it takes to hit max speed (seconds)
@@ -23,9 +24,14 @@ var facing_direction := Vector2()
 var _phase: int = Envelope.RELEASE
 var combo: int = 0
 
-var health: float = 10.0
+var health: float = 10.0 setget set_health
 var state: int = Behaviours.ALIVE
 
+
+func set_health(value: float) -> void:
+	health = value
+	emit_signal("health_changed", self, value)
+	
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -165,7 +171,7 @@ func _on_ComboResetTimer_timeout():
 
 func _on_Hitbox_area_entered(area: Area2D) -> void:
 	if area is Weapon:
-		health -= area.damage
+		set_health(health - area.damage)
 		
 		state = Behaviours.STUNNED
 		($StunTimer as Timer).start()
