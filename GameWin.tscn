@@ -1,0 +1,18 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://GameWin.gd" type="Script" id=1]
+
+[node name="GameWin" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="."]
+margin_left = 176.0
+margin_top = 296.0
+margin_right = 851.0
+margin_bottom = 310.0
+text = "You overcame your demons and transcended this mortal plane. You lay down sick rhymes with Jesus now."

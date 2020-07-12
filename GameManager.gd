@@ -2,12 +2,14 @@ extends Node
 class_name GameManager
 
 
-enum Scenes {MAIN_MENU, DAYTIME, NIGHTMARE, AUDIONIMBUS}
+enum Scenes {MAIN_MENU, DAYTIME, NIGHTMARE, AUDIONIMBUS, GAMEOVER, GAMEWIN}
 
 const MainMenu = preload("res://Main_menu.tscn")
 const Daytime = preload("res://Daytime.tscn")
 const Nightmare = preload("res://Nightmare.tscn")
 const AudioNimbus = preload("res://AudioNimbus.tscn")
+const GameOver = preload("res://GameOver.tscn")
+const GameWin = preload("res://GameWin.tscn")
 
 # Declare member variables here. Examples:
 # var a = 2
@@ -74,6 +76,21 @@ func transition_to(scene_id: int) -> void:
 			var error: int = current_scene_node.connect("scene_end", self, "_on_AudioNimbus_scene_end")
 			if error != OK:
 				print("Error: ", error)
+		
+		Scenes.GAMEOVER:
+			current_scene_node = GameOver.instance()
+			self.add_child(current_scene_node)
+			var error: int = current_scene_node.connect("scene_end", self, "_on_game_end")
+			if error != OK:
+				print("Error: ", error)
+		
+		Scenes.GAMEWIN:
+			current_scene_node = GameWin.instance()
+			current_scene_node.setup(gems_total)
+			self.add_child(current_scene_node)
+			var error: int = current_scene_node.connect("scene_end", self, "_on_game_end")
+			if error != OK:
+				print("Error: ", error)
 
 
 func _on_Main_Menu_game_start():
@@ -87,7 +104,7 @@ func _on_Daytime_fell_asleep(gems_from_daytime):
 
 
 func _on_Nightmare_defeat():
-	transition_to(Scenes.MAIN_MENU)
+	transition_to(Scenes.GAMEOVER)
 
 
 func _on_Nightmare_victory():
@@ -96,4 +113,14 @@ func _on_Nightmare_victory():
 
 func _on_AudioNimbus_scene_end():
 	days_elapsed += 1
-	transition_to(Scenes.DAYTIME)
+	if gems_total > 18:
+		transition_to(Scenes.GAMEWIN)
+	else:
+		transition_to(Scenes.DAYTIME)
+
+func _on_game_end():
+	days_elapsed = 0
+	gems_today = 0
+	gems_total = 0
+	score = 0
+	transition_to(Scenes.MAIN_MENU)
