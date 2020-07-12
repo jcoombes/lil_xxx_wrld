@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=2]
+[gd_scene load_steps=13 format=2]
 
 [ext_resource path="res://assets/main_menu/character.png" type="Texture" id=1]
 [ext_resource path="res://assets/main_menu/purple.jpg" type="Texture" id=2]
@@ -6,7 +6,6 @@
 [ext_resource path="res://assets/main_menu/credits.png" type="Texture" id=4]
 [ext_resource path="res://assets/main_menu/newgame.PNG" type="Texture" id=5]
 [ext_resource path="res://assets/main_menu/lil_xxx_wrld.png" type="Texture" id=6]
-[ext_resource path="res://New Game.gd" type="Script" id=7]
 [ext_resource path="res://Main_menu.gd" type="Script" id=8]
 
 [sub_resource type="CanvasItemMaterial" id=1]
@@ -16,7 +15,7 @@
 [sub_resource type="ImageTexture" id=3]
 
 [sub_resource type="InputEventAction" id=4]
-action = "\""
+action = "ui_accept"
 pressed = true
 
 [sub_resource type="ShortCut" id=5]
@@ -122,9 +121,8 @@ rect_scale = Vector2( 0.5, 0.5 )
 shortcut = SubResource( 5 )
 icon = ExtResource( 5 )
 flat = true
-script = ExtResource( 7 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
-[connection signal="button_up" from="New Game" to="New Game" method="_on_New_Game_button_up"]
-[connection signal="pressed" from="New Game" to="New Game" method="_on_New_Game_pressed"]
+[connection signal="button_up" from="New Game" to="." method="_on_New_Game_button_up"]
+[connection signal="pressed" from="New Game" to="." method="_on_New_Game_pressed"]

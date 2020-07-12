@@ -1,4 +1,5 @@
 extends KinematicBody2D
+class_name Player
 
 enum Behaviours {ALIVE, RECOILING, DEAD}
 enum Envelope {ATTACK, DECAY, SUSTAIN, RELEASE}
@@ -163,10 +164,8 @@ func _on_Hitbox_area_entered(area: Area2D) -> void:
 	if area is Weapon:
 		health -= area.damage
 		
-		
-		
 		if health <= 0.0:
-			emit_signal("dead")
+			emit_signal("dead", self)
 			state = Behaviours.DEAD
 			($AnimatedSprite as AnimatedSprite).visible = false
 

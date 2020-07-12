@@ -9,19 +9,37 @@
 config_version=4
 
 _global_script_classes=[ {
+"base": "KinematicBody2D",
+"class": "Demon",
+"language": "GDScript",
+"path": "res://Demon.gd"
+}, {
+"base": "Node",
+"class": "GameManager",
+"language": "GDScript",
+"path": "res://GameManager.gd"
+}, {
+"base": "KinematicBody2D",
+"class": "Player",
+"language": "GDScript",
+"path": "res://Player.gd"
+}, {
 "base": "Area2D",
 "class": "Weapon",
 "language": "GDScript",
 "path": "res://Weapon.gd"
 } ]
 _global_script_class_icons={
+"Demon": "",
+"GameManager": "",
+"Player": "",
 "Weapon": ""
 }
 
 [application]
 
 config/name="Lil Xxx Wrld"
-run/main_scene="res://Main_menu.tscn"
+run/main_scene="res://GameManager.tscn"
 config/icon="res://icon.png"
 
 [debug]

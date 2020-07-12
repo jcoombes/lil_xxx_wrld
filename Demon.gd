@@ -1,6 +1,9 @@
 extends KinematicBody2D
+class_name Demon
 
 enum Behaviours {WANDER, CHASE, ATTACK, STUNNED, DEAD}
+
+signal dead
 
 # Declare member variables here. Examples:
 # var a = 2
@@ -27,7 +30,7 @@ func _process(_delta: float) -> void:
 	z_index = int(position.y)
 	
 	if health <= 0.0:
-		free()
+		emit_signal("dead", self)
 
 
 func _physics_process(delta: float) -> void:

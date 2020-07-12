@@ -21,9 +21,9 @@ animations = [ {
 "name": "move_down",
 "speed": 5.0
 }, {
-"frames": [ ExtResource( 1 ) ],
+"frames": [ ExtResource( 2 ) ],
 "loop": true,
-"name": "move_right",
+"name": "move_left",
 "speed": 5.0
 }, {
 "frames": [ ExtResource( 6 ) ],
@@ -31,9 +31,9 @@ animations = [ {
 "name": "move_up",
 "speed": 5.0
 }, {
-"frames": [ ExtResource( 2 ) ],
+"frames": [ ExtResource( 1 ) ],
 "loop": true,
-"name": "move_left",
+"name": "move_right",
 "speed": 5.0
 } ]
 
@@ -89,7 +89,7 @@ tracks/3/keys = {
 "values": [ false, true ]
 }
 
-[sub_resource type="Animation" id=9]
+[sub_resource type="Animation" id=3]
 resource_name = "attack_left"
 length = 0.3
 tracks/0/type = "value"
@@ -141,7 +141,7 @@ tracks/3/keys = {
 "values": [ false, true ]
 }
 
-[sub_resource type="Animation" id=10]
+[sub_resource type="Animation" id=4]
 resource_name = "attack_right"
 length = 0.3
 tracks/0/type = "value"
@@ -193,7 +193,7 @@ tracks/3/keys = {
 "values": [ false, true ]
 }
 
-[sub_resource type="Animation" id=11]
+[sub_resource type="Animation" id=5]
 resource_name = "attack_up"
 length = 0.3
 tracks/0/type = "value"
@@ -270,9 +270,9 @@ offset = Vector2( 111.25, -318.057 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 anims/attack_down = SubResource( 2 )
-anims/attack_left = SubResource( 9 )
-anims/attack_right = SubResource( 10 )
-anims/attack_up = SubResource( 11 )
+anims/attack_left = SubResource( 3 )
+anims/attack_right = SubResource( 4 )
+anims/attack_up = SubResource( 5 )
 
 [node name="Movebox" type="CollisionShape2D" parent="."]
 position = Vector2( 0, 20.2043 )

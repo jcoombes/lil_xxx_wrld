@@ -1,5 +1,6 @@
-extends Button
+extends Control
 
+signal fell_asleep
 
 # Declare member variables here. Examples:
 # var a = 2
@@ -15,8 +16,6 @@ func _ready():
 #func _process(delta):
 #	pass
 
-var k
-func _on_New_Game_button_up():
-	print("good for you, sport")
-	k = get_tree().change_scene("res://Daytime.tscn")
-	pass
+
+func _on_Lyrics_faded_out():
+	emit_signal("fell_asleep")
